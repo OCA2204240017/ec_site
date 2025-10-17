@@ -1,0 +1,9 @@
+<h1><%= @tag.name %></h1>
+<p>関連書籍:</p>
+<ul>
+  <% @tag.books.each do |b| %>
+    <li><%= link_to b.title, admin_book_path(b) %></li>
+  <% end %>
+</ul>
+
+<%= link_to '一覧へ戻る', admin_tags_path %>

@@ -1,2 +1,2 @@
-@import "bootstrap/dist/css/bootstrap.min.css";
-@import "custom";
+@use "bootstrap" as *;
+@use "custom";

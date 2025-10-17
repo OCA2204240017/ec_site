@@ -1,0 +1,9 @@
+<h1>マイページ</h1>
+<p>メール: <%= @user.email %></p>
+
+<h2>注文履歴</h2>
+<ul>
+  <% @user.orders.each do |o| %>
+    <li><%= link_to "注文 ##{o.id}", order_path(o) %> - 合計: <%= number_to_currency(o.total_cents.to_i / 100.0) rescue o.total_cents %></li>
+  <% end %>
+</ul>

@@ -1,0 +1,18 @@
+<div class="container">
+	<div class="card">
+		<div class="card-body">
+			<h1 class="card-title"><%= @book.title %></h1>
+			<h6 class="card-subtitle mb-2 text-muted">著者: <%= @book.author %></h6>
+			<p>発行日: <%= @book.published_at %></p>
+			<p>価格: <%= number_to_currency((@book.price || 0) / 100.0) rescue @book.price %></p>
+			<p>ステータス: <%= @book.status %></p>
+			<p>タグ: <%= @book.tags.map { |t| link_to t.name, tag_path(t), class: 'badge bg-secondary me-1' }.join(' ').html_safe %></p>
+
+			<%= form_with url: cart_add_path, method: :post, class: 'd-flex gap-2' do |f| %>
+				<%= hidden_field_tag :book_id, @book.id %>
+				<%= number_field_tag :quantity, 1, min: 1, class: 'form-control w-auto' %>
+				<%= f.submit 'カートに入れる', class: 'btn btn-primary' %>
+			<% end %>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,11 @@
+<h1>タグ一覧</h1>
+<%= link_to '新規タグ作成', new_admin_tag_path %>
+<ul>
+  <% @tags.each do |t| %>
+    <li>
+      <%= link_to t.name, admin_tag_path(t) %>
+      (<%= link_to '編集', edit_admin_tag_path(t) %> |
+       <%= link_to '削除', admin_tag_path(t), method: :delete, data: { confirm: '本当に削除しますか?' } %>)
+    </li>
+  <% end %>
+</ul>

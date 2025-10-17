@@ -1,0 +1,9 @@
+<h1>ご注文ありがとうございます</h1>
+<p>注文番号: <%= @order.id %></p>
+<p>合計: <%= number_to_currency(@order.total_cents.to_i / 100.0) rescue @order.total_cents %></p>
+<h2>注文内容</h2>
+<ul>
+  <% @order.order_items.each do |oi| %>
+    <li><%= oi.book.title %> x <%= oi.quantity %> - <%= number_to_currency((oi.unit_price_cents || 0).to_i / 100.0) rescue oi.unit_price_cents %></li>
+  <% end %>
+</ul>

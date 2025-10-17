@@ -1,0 +1,16 @@
+<div class="container">
+  <h1 class="mb-3">書籍一覧</h1>
+  <div class="row">
+    <% @books.each do |b| %>
+      <div class="col-md-4 mb-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to b.title, book_path(b) %></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%= b.author %></h6>
+            <p class="card-text"><%= b.tags.map { |t| link_to t.name, tag_path(t), class: 'badge bg-secondary me-1' }.join(' ').html_safe %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

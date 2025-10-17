@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title">注文詳細</h1>
+      <p>合計: <%= number_to_currency(@order.total_cents.to_i / 100.0) rescue @order.total_cents %></p>
+      <ul class="list-group">
+        <% @order.order_items.each do |oi| %>
+          <li class="list-group-item d-flex justify-content-between">
+            <div><%= oi.book.title %> x <%= oi.quantity %></div>
+            <div><%= number_to_currency((oi.unit_price_cents || 0).to_i / 100.0) rescue oi.unit_price_cents %></div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

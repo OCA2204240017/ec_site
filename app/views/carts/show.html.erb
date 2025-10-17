@@ -1,0 +1,21 @@
+<div class="container">
+  <h1 class="mb-3">カート</h1>
+  <% if @cart.cart_items.any? %>
+    <ul class="list-group mb-3">
+      <% @cart.cart_items.each do |ci| %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong><%= ci.book.title %></strong>
+            <div class="text-muted">数量: <%= ci.quantity %></div>
+          </div>
+          <div>
+            <%= link_to '削除', remove_cart_path(ci), method: :delete, class: 'btn btn-sm btn-outline-danger' %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <%= button_to '購入する', orders_path, method: :post, class: 'btn btn-primary' %>
+  <% else %>
+    <p class="text-muted">カートは空です</p>
+  <% end %>
+</div>

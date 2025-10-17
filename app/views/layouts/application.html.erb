@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EcSite</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">EcSite</a>
+          <div class="collapse navbar-collapse">
+            <%= form_with url: books_path, method: :get, local: true, html: { class: 'd-flex ms-auto' } do |f| %>
+              <%= f.search_field :q, placeholder: '書籍を検索', class: 'form-control me-2' %>
+              <%= select_tag :tag_id, options_for_select([['--タグで絞る--', '']] + Tag.all.map { |t| [t.name, t.id] }, params[:tag_id]), class: 'form-select me-2' %>
+              <%= f.submit '検索', class: 'btn btn-outline-light' %>
+            <% end %>
+
+            <ul class="navbar-nav ms-3">
+              <% if logged_in? %>
+                <li class="nav-item"><span class="navbar-text text-white me-2"><%= current_user.try(:name) || current_user.email %></span></li>
+                <li class="nav-item"><%= link_to 'マイページ', user_path(current_user), class: 'nav-link' %></li>
+                <li class="nav-item"><%= link_to 'カート', cart_path, class: 'nav-link' %></li>
+                <li class="nav-item"><%= button_to 'ログアウト', session_path, method: :delete, class: 'btn btn-link nav-link text-white' %></li>
+              <% else %>
+                <li class="nav-item"><%= link_to 'ログイン', new_session_path, class: 'nav-link' %></li>
+                <li class="nav-item"><%= link_to 'サインアップ', main_app.new_user_path, class: 'nav-link' %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <% flash.each do |key, msg| %>
+        <p class="flash <%= key %>"><%= msg %></p>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>

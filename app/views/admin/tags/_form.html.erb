@@ -1,0 +1,10 @@
+<%= form_with model: tag, url: tag.persisted? ? admin_tag_path(tag) : admin_tags_path, local: true do |f| %>
+  <div>
+    <%= f.label :name, 'タグ名' %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,8 @@
+ご注文ありがとうございます
+注文番号: <%= @order.id %>
+合計: <%= @order.total_cents %>
+
+注文内容:
+<% @order.order_items.each do |oi| %>
+  - <%= oi.book.title %> x <%= oi.quantity %> (単価: <%= oi.unit_price_cents %>)
+<% end %>

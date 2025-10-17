@@ -1,0 +1,30 @@
+/* Custom SCSS overrides for the ec_site application */
+
+// Body background and base font
+body {
+  background-color: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+/* Header navbar tweaks */
+.navbar-brand {
+  font-weight: 700;
+}
+
+.site-header {
+  margin-bottom: 1.5rem;
+}
+
+.flash {
+  margin: 1rem 0;
+}
+
+.book-card {
+  height: 100%;
+}
+
+/* Small helpers */
+.muted-small {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
