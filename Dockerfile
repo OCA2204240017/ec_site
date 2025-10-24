@@ -51,6 +51,38 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
 
+# --- 開発用イメージ (dev target) --------------------------------------------
+FROM base AS dev
+
+# Development-time packages: build tools, node/yarn for js deps, sqlite3 for local DB
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential git nodejs npm sqlite3 libpq-dev && \
+    npm install -g yarn || true && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+
+# Development environment settings and ensure bundle binstubs are on PATH
+ENV RAILS_ENV="development" \
+    BUNDLE_WITHOUT="production" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    PATH="/usr/local/bundle/bin:/rails/bin:${PATH}"
+
+WORKDIR /rails
+
+# Install Ruby gems (cacheable layer)
+COPY Gemfile Gemfile.lock ./
+RUN bundle install --jobs 4 --retry 3 || true
+
+# Copy app code
+COPY . .
+
+# Optional: prepare local DB (don't fail the image build on DB errors)
+RUN if [ -f bin/rails ]; then bin/rails db:create db:migrate || true; fi
+
+EXPOSE 3000
+
+# Default command for dev target: start rails server bound to 0.0.0.0
+CMD ["bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+
 # Final stage for app image
 FROM base
 
